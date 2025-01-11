@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Counter</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      :root {
+        --element-width: 68px;
+      }
+
+      .root {
+        background-color: #eaeaea;
+        padding: 8px;
+        display: inline-flex;
+        gap: 12px;
+      }
+
+      .counter_value {
+        line-height: 1;
+        padding: 2px 4px;
+        background-color: #ffffff;
+      }
+
+      .counter_value,
+      .counter_button {
+        width: var(--element-width);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="root">
+      <div class="counter_value"></div>
+      <button class="counter_button">Count</button>
+    </div>
+    <script>
+      const $CounterValue = document.querySelector('.counter_value');
+      const $CounterButton = document.querySelector('.counter_button');
+
+      $CounterValue.innerHTML = 0;
+
+      $CounterButton.addEventListener('click', () => {
+        $CounterValue.innerHTML = Number($CounterValue.innerHTML) + 1;
+      });
+    </script>
+  </body>
+</html>
