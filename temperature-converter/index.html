@@ -20,7 +20,7 @@
         display: inline-flex;
         gap: 8px;
       }
-      
+
       .form_item {
         display: flex;
         align-items: center;
@@ -43,50 +43,51 @@
   <body>
     <div class="root">
       <div class="form_item">
-        <input class="celsius_input" />
+        <input id="celsius_input" />
         <label>Celsius</label>
       </div>
       <span> = </span>
       <div class="form_item">
-        <input class="fahrenheit_input" />
+        <input id="fahrenheit_input" />
         <label>Fahrenheit</label>
       </div>
     </div>
     <script>
+      function isNumber(n) {
+        return n != undefined && !Number.isNaN(n);
+      }
+
       function cToF(C) {
-        return (C * (9 / 5))  + 32;
+        return C * (9 / 5) + 32;
       }
 
       function fToC(F) {
         return (F - 32) * (5 / 9);
       }
 
-      const $C = document.querySelector('.celsius_input');
-      const $F = document.querySelector('.fahrenheit_input');
+      const $Celsius = document.getElementById('celsius_input');
+      const $Fahrenheit = document.getElementById('fahrenheit_input');
 
-      $C.addEventListener('input', e => {
-        const celciusValue = Number(e.target.value);
-        if (e.target.value && !Number.isNaN(celciusValue)) {
-          $F.value = cToF(celciusValue);
-          $F.classList.remove('input_disable');
-          $C.classList.remove('input_error');
-        } else {
-          $F.classList.add('input_disable');
-          $C.classList.add('input_error');
-        }
-      });
+      $Celsius.addEventListener('input', inputHandler);
+      $Fahrenheit.addEventListener('input', inputHandler);
 
-      $F.addEventListener('input', e => {
-        const fahrenheitValue = Number(e.target.value);
-        if (e.target.value && !Number.isNaN(fahrenheitValue)) {
-          $C.value = fToC(fahrenheitValue);
-          $C.classList.remove('input_disable');
-          $F.classList.remove('input_error');
+      function inputHandler(e) {
+        const numberValue = e.target.value ? Number(e.target.value) : undefined;
+        const isCelsius = (e.target.id = 'celsius_input');
+
+        const $Input = isCelsius ? $Celsius : $Fahrenheit;
+        const $Other = isCelsius ? $Fahrenheit : $Celsius;
+        const convert = isCelsius ? cToF : fToC;
+
+        if (isNumber(numberValue)) {
+          $Other.value = convert(numberValue);
+          $Other.classList.remove('input_disable');
+          $Input.classList.remove('input_error');
         } else {
-          $C.classList.add('input_disable');
-          $F.classList.add('input_error');
+          $Other.classList.add('input_disable');
+          $Input.classList.add('input_error');
         }
-      });
+      }
     </script>
   </body>
 </html>
